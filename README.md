@@ -48,7 +48,7 @@ session()->put('docusign_auth_code', $docuSignAuthCode);
 
 private function getToken(ApiClient $apiClient) : string{
     try {
-        $privateKey = file_get_contents(public_path('private.key'),true);
+        $privateKey = file_get_contents(public_path('private.key'),true); // This is your application key creat on DocuSign
         $response = $apiClient->requestJWTUserToken(
             $ikey = $this->DOCUSIGN_INTEGRATION_KEY,
             $userId =  $this->DOCUSIGN_USER_ID,
@@ -192,7 +192,8 @@ class DocusignController extends Controller
 
 
         $accompanyingSignature = new \DocuSign\eSign\Model\SignHere([
-            'anchor_string' => 'unique_key_1', //This key also available in your docusment. Docusign will identify this text key and place the signature on this key place automatically
+            'anchor_string' => 'unique_key_1',
+//This key also available in your docusment. Docusign will identify this text key and place the signature on this key place automatically
             'anchor_units' => 'pixels',
             'anchor_y_offset' => '-10',
             'anchor_x_offset' => '270',
