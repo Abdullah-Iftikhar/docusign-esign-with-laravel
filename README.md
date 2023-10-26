@@ -7,10 +7,43 @@ To install the required PHP dependencies, run the following Composer command in 
 ```bash
 composer require docusign/esign-client
 ```
-### Set your .env
+### Set Your .env
 
 ```dotenv
-DATABASE_URL=your_database_connection_string
-API_KEY=your_api_key
-SECRET_KEY=your_secret_key
+DOCUSIGN_USER_ID = *********
+DOCUSIGN_API_ACCOUNT_ID = *********
+DOCUSIGN_ACCOUNT_BASE_URI = *********
+DOCUSIGN_APP_NAME = *********
+DOCUSIGN_INTEGRATION_KEY = *********
+DOCUSIGN_SECRET_KEY = *********
+DOCUSIGN_ACCOUNT_BASE_URI_API = *********
+DOCUSIGN_SCOPE = *********
+```
+
+### Login Through API & Get The Authenticated Token
+
+```php
+//DocuSign Auth Token
+$apiClient = new ApiClient();
+$apiClient->getOAuth()->setOAuthBasePath($this->DOCUSIGN_ACCOUNT_BASE_URI);
+$docuSignAuthCode = $this->getToken($apiClient);
+session()->put('docusign_auth_code', $docuSignAuthCode);
+//End Docusign Auth Token
+
+private function getToken(ApiClient $apiClient) : string{
+    try {
+        $privateKey = file_get_contents(public_path('private.key'),true);
+        $response = $apiClient->requestJWTUserToken(
+            $ikey = $this->DOCUSIGN_INTEGRATION_KEY,
+            $userId =  $this->DOCUSIGN_USER_ID,
+            $key = $privateKey,
+            $scope = $this->DOCUSIGN_SCOPE
+        );
+        $token = $response[0];
+        $accessToken = $token->getAccessToken();
+    } catch (\Exception $th) {
+        throw $th;
+    }
+    return $accessToken;
+}
 ```
