@@ -28,10 +28,10 @@ Copy this code for *web.php*
 ### Routes
 
 ```php
-Route::get('docusign', [DocusignController::class, 'index'])->name('internal.agent.docusign');
-Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('internal.agent.connect.docusign');
-Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('internal.agent.docusign.callback');
-Route::get('sign-document', [DocusignController::class, 'signDocument'])->name('internal.agent.docusign.sign');
+Route::get('docusign', [DocusignController::class, 'index'])->name('docusign');
+Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('connect.docusign');
+Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('docusign.callback');
+Route::get('sign-document', [DocusignController::class, 'signDocument'])->name('docusign.sign');
 ```
 
 Just get the authenticated token through API and set this in the session for *e-signature* requests.
