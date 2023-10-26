@@ -20,6 +20,15 @@ DOCUSIGN_ACCOUNT_BASE_URI_API = *********
 DOCUSIGN_SCOPE = *********
 ```
 
+### Routes
+
+```php
+Route::get('docusign', [DocusignController::class, 'index'])->name('internal.agent.docusign');
+Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('internal.agent.connect.docusign');
+Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('internal.agent.docusign.callback');
+Route::get('sign-document/{key?}', [DocusignController::class, 'signDocument'])->name('internal.agent.docusign.sign');
+```
+
 ### Login Through API & Get The Authenticated Token
 
 ```php
