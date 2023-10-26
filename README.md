@@ -31,7 +31,7 @@ Copy this code for *web.php*
 Route::get('docusign', [DocusignController::class, 'index'])->name('internal.agent.docusign');
 Route::get('connect-docusign', [DocusignController::class, 'connectDocusign'])->name('internal.agent.connect.docusign');
 Route::get('docusign/callback', [DocusignController::class, 'callback'])->name('internal.agent.docusign.callback');
-Route::get('sign-document/{key?}', [DocusignController::class, 'signDocument'])->name('internal.agent.docusign.sign');
+Route::get('sign-document', [DocusignController::class, 'signDocument'])->name('internal.agent.docusign.sign');
 ```
 
 Just get the authenticated token through API and set this in the session for *e-signature* requests.
@@ -107,10 +107,10 @@ class DocusignController extends Controller
         $this->baseUrl = "https://".env('DOCUSIGN_ACCOUNT_BASE_URI_API');
     }
 
-    public function signDocument($position)
+    public function signDocument()
     {
         try {
-            $this->dsReturnUrl = route('contract.steps', ['position' => $position]);
+            $this->dsReturnUrl = route('home');
             $this->args = $this->getTemplateArgs();
             $args = $this->args;
             $envelope_args = $args["envelope_args"];
